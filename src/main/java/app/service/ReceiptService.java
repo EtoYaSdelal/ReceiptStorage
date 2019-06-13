@@ -1,10 +1,10 @@
-package app.dao;
+package app.service;
 
 import app.model.Receipt;
 
 import java.util.List;
 
-public interface DaoReceipt {
+public interface ReceiptService {
     void addReceipt(Receipt receipt);
 
     void editReceipt(Receipt receipt);

@@ -35,8 +35,8 @@ public class DaoReceiptImpl implements DaoReceipt {
     }
 
     @Override
-    public void deleteReceipt(Receipt receipt) {
-        receiptMap.remove(receipt.getId());
+    public void deleteReceipt(String id) {
+        receiptMap.remove(id);
     }
 
     @Override

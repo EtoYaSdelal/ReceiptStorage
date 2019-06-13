@@ -15,8 +15,8 @@ public class RandomReceiptGetter {
         receipt.setId(UUID.randomUUID().toString().substring(0, 8));
         receipt.setCompanyName(new NameGenerator().getAcronym());
         receipt.setPayment(new Random().nextDouble() * new Random().nextInt(10000000));
-        receipt.setDate(getDate());
-        receipt.setTime(getTime());
+        receipt.setDate(getDate().toString());
+        receipt.setTime(getTime().toString());
         receipt.setPaid(new Random().nextBoolean());
         if (receipt.isPaid()) {
             receipt.setComment("everything were nice");

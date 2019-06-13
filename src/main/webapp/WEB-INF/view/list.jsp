@@ -1,35 +1,31 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Fry
-  Date: 6/12/2019
-  Time: 23:38
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
 <head>
-    <title>List Page</title>
+    <title>Receipts List</title>
 </head>
 <body>
-<h1>hello</h1>
-<label>page scope: ${pageScope.size()}</label>
-<p></p>
-<label>${pageScope.values()}</label>
-<p></p>
-<h3>Attention:</h3>
+
+
+<h1>Receipts List</h1>
+<hr>
+<c:url value="/add" var="add"/>
+<a href="${add}">Add new Receipt</a>
+<hr>
 <c:forEach items="${receipts}" var="receipt">
     <jsp:useBean id="receipt" class="app.model.Receipt" type="app.model.Receipt"/>
-    <p>${receipt.id}</p>
+    <h4>Bill #${receipt.id}</h4>
     <p>${receipt.companyName}</p>
-    <p>${receipt.payment}</p>
+    <c:set var="pay" value="${receipt.payment}"/>
+    <p><fmt:formatNumber value="${pay}" type="currency"/></p>
+    <p>paid: ${receipt.paid}</p>
     <p>${receipt.date} | ${receipt.time}</p>
-    <p>${receipt.paid}</p>
     <p>${receipt.comment}</p>
+    <a href="/edit/${receipt.id}">edit</a>
+    <a href="/delete/${receipt.id}">delete</a>
     <hr>
 </c:forEach>
 <label>${receipt}</label>
-<p></p>
-<a href="edit">to edit</a>
 </body>
 </html>

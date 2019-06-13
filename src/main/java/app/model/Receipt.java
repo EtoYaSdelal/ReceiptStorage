@@ -1,15 +1,14 @@
 package app.model;
 
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.UUID;
 
 public class Receipt {
-    private String id;
+    private String id = UUID.randomUUID().toString().substring(0, 8);
     private String companyName;
     private double payment;
-    private LocalDate date;
-    private LocalTime time;
+    private String date;
+    private String time;
     private boolean paid;
     private String comment;
 
@@ -37,19 +36,19 @@ public class Receipt {
         this.payment = payment;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public LocalTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
