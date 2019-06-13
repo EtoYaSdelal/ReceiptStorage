@@ -2,11 +2,19 @@ package app.service;
 
 import app.dao.DaoReceiptImpl;
 import app.model.Receipt;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ReceiptServiceImpl implements ReceiptService {
-    private DaoReceiptImpl daoReceipt = new DaoReceiptImpl();
+
+    private final DaoReceiptImpl daoReceipt;
+
+    @Autowired
+    public ReceiptServiceImpl(DaoReceiptImpl daoReceipt) {
+        this.daoReceipt = daoReceipt;
+    }
 
     @Override
     public void addReceipt(Receipt receipt) {

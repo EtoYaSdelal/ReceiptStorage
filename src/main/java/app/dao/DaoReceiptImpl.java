@@ -2,12 +2,13 @@ package app.dao;
 
 import app.model.Receipt;
 import app.util.RandomReceiptGetter;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
+@Repository
 public class DaoReceiptImpl implements DaoReceipt {
     private static Map<String, Receipt> receiptMap = new HashMap<>();
 
