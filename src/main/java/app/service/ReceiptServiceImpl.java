@@ -4,8 +4,10 @@ import app.dao.DaoReceiptImpl;
 import app.model.Receipt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+
 @Service
 public class ReceiptServiceImpl implements ReceiptService {
 
@@ -17,27 +19,32 @@ public class ReceiptServiceImpl implements ReceiptService {
     }
 
     @Override
+    @Transactional
     public void addReceipt(Receipt receipt) {
         daoReceipt.addReceipt(receipt);
 
     }
 
     @Override
+    @Transactional
     public void editReceipt(Receipt receipt) {
         daoReceipt.editReceipt(receipt);
     }
 
     @Override
+    @Transactional
     public Receipt getReceipt(String id) {
         return daoReceipt.getReceipt(id);
     }
 
     @Override
-    public void deleteReceipt(String id) {
-        daoReceipt.deleteReceipt(id);
+    @Transactional
+    public void deleteReceipt(Receipt receipt) {
+        daoReceipt.deleteReceipt(receipt);
     }
 
     @Override
+    @Transactional
     public List<Receipt> getAllReceipts() {
         return daoReceipt.getAllReceipts();
     }

@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -20,10 +20,10 @@
     <input id="paid" name="paid">
     <p></p>
     <label for="date">date:</label>
-    <input id="date" name="date">
+    <input id="date" name="date" placeholder="yyyy-MM-dd">
     <p></p>
     <label for="time">time:</label>
-    <input id="time" name="time">
+    <input id="time" name="time" placeholder="HH:mm:ss">
     <p></p>
     <label for="comment">Comment:</label>
     <textarea id="comment" name="comment"></textarea>

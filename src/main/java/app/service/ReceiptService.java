@@ -11,7 +11,7 @@ public interface ReceiptService {
 
     Receipt getReceipt(String id);
 
-    void deleteReceipt(String id);
+    void deleteReceipt(Receipt receipt);
 
     List<Receipt> getAllReceipts();
 }

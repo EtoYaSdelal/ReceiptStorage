@@ -1,15 +1,42 @@
 package app.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.UUID;
 
+
+@Entity
+@Table(name = "receipt")
 public class Receipt {
+    @Id
+    @Column(name = "rec_id")
     private String id = UUID.randomUUID().toString().substring(0, 8);
+
+    @Column(name = "company_name")
     private String companyName;
+
+    @Column(name = "payment")
     private double payment;
-    private String date;
-    private String time;
+
+    @Column(name = "paid")
     private boolean paid;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "date")
+    private LocalDate date;
+
+    @Column(name = "time")
+    @DateTimeFormat(pattern = "HH:mm:ss")
+    private LocalTime time;
+
+    @Column(name = "comment")
     private String comment;
 
     public String getId() {
@@ -36,21 +63,23 @@ public class Receipt {
         this.payment = payment;
     }
 
-    public String getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
-    public String getTime() {
+
+    public LocalTime getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(LocalTime time) {
         this.time = time;
     }
+
 
     public boolean isPaid() {
         return paid;

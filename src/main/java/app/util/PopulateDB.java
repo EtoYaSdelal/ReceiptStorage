@@ -2,14 +2,10 @@ package app.util;
 
 import app.model.Receipt;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class PopulateDB {
@@ -33,9 +29,11 @@ public class PopulateDB {
                 preparedStatement.setString(2, receipt.getCompanyName());
                 preparedStatement.setDouble(3, receipt.getPayment());
                 preparedStatement.setBoolean(4, receipt.isPaid());
-                Date parsed = format.parse(receipt.getDate());
-                preparedStatement.setDate(5, new java.sql.Date(parsed.getTime()));
-                preparedStatement.setTime(6, java.sql.Time.valueOf(receipt.getTime()));
+                preparedStatement.setDate(5, Date.valueOf(receipt.getDate()));
+                preparedStatement.setTime(6,Time.valueOf(receipt.getTime()));
+                //Date parsed = format.parse(receipt.getDate());
+//                preparedStatement.setDate(5, new java.sql.Date(parsed.getTime()));
+//                preparedStatement.setTime(6, java.sql.Time.valueOf(receipt.getTime()));
                 preparedStatement.setString(7, receipt.getComment());
                 preparedStatement.addBatch();
             }

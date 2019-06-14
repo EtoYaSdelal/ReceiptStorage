@@ -1,53 +1,54 @@
 package app.dao;
 
 import app.model.Receipt;
-import app.util.RandomReceiptGetter;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 @Repository
 public class DaoReceiptImpl implements DaoReceipt {
-    private static Map<String, Receipt> receiptMap = new HashMap<>();
 
-    static {
-        for (int i = 0; i < 10; i++ ){
-            Receipt receipt = RandomReceiptGetter.getReceipt();
-            receiptMap.put(receipt.getId(),receipt);
-        }
+    private SessionFactory sessionFactory;
+
+    @Autowired
+    public DaoReceiptImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void addReceipt(Receipt receipt) {
-        receiptMap.put(receipt.getId(), receipt);
+        Session session = sessionFactory.getCurrentSession();
+        session.persist(receipt);
     }
 
     @Override
     public void editReceipt(Receipt receipt) {
-        receiptMap.put(receipt.getId(), receipt);
-
+        Session session = sessionFactory.getCurrentSession();
+        session.update(receipt);
     }
+
 
     @Override
     public Receipt getReceipt(String id) {
-        return receiptMap.get(id);
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(Receipt.class, id);
     }
 
     @Override
-    public void deleteReceipt(String id) {
-        receiptMap.remove(id);
+    public void deleteReceipt(Receipt receipt) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(receipt);
     }
 
+
     @Override
+    @SuppressWarnings("unchecked")
     public List<Receipt> getAllReceipts() {
-        return new ArrayList<>(receiptMap.values());
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Receipt ").list();
     }
 
-//    public static void main(String[] args) {
-//        DaoReceiptImpl daoReceipt = new DaoReceiptImpl();
-//
-//        daoReceipt.getAllReceipts().forEach(x-> System.out.println(x + "\n"));
-//    }
 }

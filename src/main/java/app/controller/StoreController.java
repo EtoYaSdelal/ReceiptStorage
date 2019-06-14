@@ -65,9 +65,9 @@ public class StoreController {
     public ModelAndView deleteReceipt(@PathVariable("id") String id) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
-        receiptService.deleteReceipt(id);
+
+        receiptService.deleteReceipt(receiptService.getReceipt(id));
         return modelAndView;
     }
-
 
 }

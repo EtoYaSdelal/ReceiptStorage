@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <html>
@@ -22,6 +22,7 @@
     <input type="hidden" name="id" value="${receipt.id}">
     <input type="hidden" name="date" value="${receipt.date}">
     <input type="hidden" name="time" value="${receipt.time}">
+
     <label for="companyName">Company name:</label>
     <input id="companyName" name="companyName" value="${receipt.companyName}">
     <p></p>
@@ -39,6 +40,6 @@
 
 
 <hr>
-<a href="/">to list</a>
+<a href="${pageContext.request.contextPath}/">to list</a>
 </body>
 </html>
