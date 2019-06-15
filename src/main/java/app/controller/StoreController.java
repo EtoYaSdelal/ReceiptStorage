@@ -4,11 +4,11 @@ import app.model.Receipt;
 import app.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class StoreController {
@@ -23,8 +23,9 @@ public class StoreController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView allModels() {
         ModelAndView modelAndView = new ModelAndView();
+        List<Receipt> allReceipts = receiptService.getAllReceipts();
         modelAndView.setViewName("list");
-        modelAndView.addObject("receipts", receiptService.getAllReceipts());
+        modelAndView.addObject("receipts", allReceipts);
         return modelAndView;
     }
 
@@ -54,7 +55,7 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addReceipt(@ModelAttribute("receipt") Receipt receipt) {
+    public ModelAndView addReceipt(@ModelAttribute("receipt") Receipt receipt) throws IllegalArgumentException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
         receiptService.addReceipt(receipt);
@@ -67,6 +68,29 @@ public class StoreController {
         modelAndView.setViewName("redirect:/");
 
         receiptService.deleteReceipt(receiptService.getReceipt(id));
+        return modelAndView;
+    }
+
+    @ExceptionHandler(Exception.class)
+    @GetMapping(value = "/error")
+    public ModelAndView allExceptionHandler(HttpServletRequest req, Exception ex) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("exception", ex);
+        modelAndView.addObject("url", req.getRequestURL());
+        modelAndView.setViewName("error");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/", params = "show", method = RequestMethod.GET)
+    public @ResponseBody
+    ModelAndView showDebtors(@RequestParam(value = "show") String action) {
+        ModelAndView modelAndView = new ModelAndView();
+        if ("debtors".equals(action)) {
+            List<Receipt> receipts = receiptService.showDebtors();
+            modelAndView.setViewName("list");
+            modelAndView.addObject("receipts", receipts);
+            receipts.forEach(System.out::println);
+        }
         return modelAndView;
     }
 

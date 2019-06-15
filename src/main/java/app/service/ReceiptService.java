@@ -14,4 +14,6 @@ public interface ReceiptService {
     void deleteReceipt(Receipt receipt);
 
     List<Receipt> getAllReceipts();
+
+    List<Receipt> showDebtors();
 }

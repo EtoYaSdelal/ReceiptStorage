@@ -48,4 +48,12 @@ public class ReceiptServiceImpl implements ReceiptService {
     public List<Receipt> getAllReceipts() {
         return daoReceipt.getAllReceipts();
     }
+
+    @Override
+    @Transactional
+    public List<Receipt> showDebtors() {
+        return daoReceipt.showDebtors();
+    }
+
 }
+

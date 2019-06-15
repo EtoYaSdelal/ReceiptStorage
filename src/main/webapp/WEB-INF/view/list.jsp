@@ -10,14 +10,15 @@
 <body>
 <style>
     .list-page {
-        margin: 10px 70px 150px 70px;
+        margin: 10px 70px 150px 150px;
     }
 
 </style>
 
 <p class="h1">Receipts List size: ${receipts.size()}</p>
 <c:url value="/add" var="add"/>
-<a href="${add}">Add new Receipt</a>
+<c:url value="/" var="home"/>
+<a href="${add}">Add new Receipt</a> <a href="${home}?show=debtors">debtors only</a>
 <hr>
 <div class="list-page">
     <div class="card-columns">
