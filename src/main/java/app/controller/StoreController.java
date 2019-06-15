@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Controller
@@ -58,6 +60,13 @@ public class StoreController {
     public ModelAndView addReceipt(@ModelAttribute("receipt") Receipt receipt) throws IllegalArgumentException {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("redirect:/");
+        if (receipt.getTime() == null) {
+            receipt.setTime(LocalTime.now());
+        }
+        if (receipt.getDate() == null) {
+            receipt.setDate(LocalDate.now());
+        }
+        System.out.println(receipt.getPayment() + " bool " + receipt.isPaid());
         receiptService.addReceipt(receipt);
         return modelAndView;
     }
@@ -85,12 +94,17 @@ public class StoreController {
     public @ResponseBody
     ModelAndView showDebtors(@RequestParam(value = "show") String action) {
         ModelAndView modelAndView = new ModelAndView();
-        if ("debtors".equals(action)) {
-            List<Receipt> receipts = receiptService.showDebtors();
-            modelAndView.setViewName("list");
-            modelAndView.addObject("receipts", receipts);
-            receipts.forEach(System.out::println);
+        switch (action) {
+            case "debtors":
+                modelAndView.setViewName("list");
+                modelAndView.addObject("receipts", receiptService.showDebtors());
+                break;
+            case "sortByName":
+                modelAndView.setViewName("list");
+                modelAndView.addObject("receipts", receiptService.sortByName());
+                break;
         }
+
         return modelAndView;
     }
 

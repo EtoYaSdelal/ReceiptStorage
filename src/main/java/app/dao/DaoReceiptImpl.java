@@ -51,11 +51,4 @@ public class DaoReceiptImpl implements DaoReceipt {
         return session.createQuery("from Receipt ").list();
     }
 
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Receipt> showDebtors() {
-        Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("from Receipt where paid=false").list();
-    }
-
 }

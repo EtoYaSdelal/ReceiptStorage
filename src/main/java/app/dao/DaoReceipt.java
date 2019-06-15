@@ -15,5 +15,4 @@ public interface DaoReceipt {
 
     List<Receipt> getAllReceipts();
 
-    List<Receipt> showDebtors();
 }

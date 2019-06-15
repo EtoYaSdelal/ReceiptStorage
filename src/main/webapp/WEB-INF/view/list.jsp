@@ -13,14 +13,20 @@
         margin: 10px 70px 150px 150px;
     }
 
+    .menu-link {
+        margin-right: 20px;
+    }
+
 </style>
 
-<p class="h1">Receipts List size: ${receipts.size()}</p>
-<c:url value="/add" var="add"/>
-<c:url value="/" var="home"/>
-<a href="${add}">Add new Receipt</a> <a href="${home}?show=debtors">debtors only</a>
-<hr>
 <div class="list-page">
+    <p class="h1">Receipts List size: ${receipts.size()}</p>
+    <c:url value="/add" var="add"/>
+    <c:url value="/" var="home"/>
+    <a class="menu-link" href="${add}">Add new Receipt</a>
+    <a class="menu-link" href="${home}?show=debtors">debtors only</a>
+    <a class="menu-link" href="${home}?show=sortByName">sort by company name</a>
+    <hr style="margin: 10px 74px 10px 0">
     <div class="card-columns">
         <c:forEach items="${receipts}" var="receipt">
             <jsp:useBean id="receipt" class="app.model.Receipt" type="app.model.Receipt"/>

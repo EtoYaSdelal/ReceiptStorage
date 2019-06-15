@@ -16,4 +16,6 @@ public interface ReceiptService {
     List<Receipt> getAllReceipts();
 
     List<Receipt> showDebtors();
+
+    List<Receipt> sortByName();
 }

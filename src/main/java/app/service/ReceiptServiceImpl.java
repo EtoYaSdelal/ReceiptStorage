@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ReceiptServiceImpl implements ReceiptService {
@@ -52,7 +54,13 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Override
     @Transactional
     public List<Receipt> showDebtors() {
-        return daoReceipt.showDebtors();
+        return getAllReceipts().stream().filter(x -> !x.isPaid()).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional
+    public List<Receipt> sortByName() {
+        return getAllReceipts().stream().sorted(Comparator.comparing(Receipt::getCompanyName)).collect(Collectors.toList());
     }
 
 }
