@@ -31,14 +31,14 @@
         <c:forEach items="${receipts}" var="receipt">
             <jsp:useBean id="receipt" class="app.model.Receipt" type="app.model.Receipt"/>
             <c:choose>
-                <c:when test="${receipt.paid}">
+                <c:when test="${receipt.paid.booleanValue()}">
                     <div class="card border-primary mb-3" style="max-width: 18rem;">
                         <div class="card-header">Bill #${receipt.id}</div>
                         <div class="card-body text-secondary">
                             <h5 class="card-title">${receipt.companyName}</h5>
                             <c:set var="pay" value="${receipt.payment}"/>
                             <p class="card-text"><fmt:formatNumber value="${pay}" type="currency"/></p>
-                            <p class="card-text">paid: ${receipt.paid}</p>
+                            <p class="card-text">paid: ${receipt.paid.booleanValue()}</p>
                             <p class="card-text">${receipt.date} | ${receipt.time}</p>
                             <p class="card-text">${receipt.comment}</p>
                             <a href="/edit/${receipt.id}" style="margin-right: 175px">edit</a>
@@ -46,14 +46,14 @@
                         </div>
                     </div>
                 </c:when>
-                <c:when test="${!receipt.paid}">
+                <c:when test="${!receipt.paid.booleanValue()}">
                     <div class="card border-danger mb-3" style="max-width: 18rem;">
                         <div class="card-header">Bill #${receipt.id} </div>
                         <div class="card-body text-secondary">
                             <h5 class="card-title">${receipt.companyName}</h5>
                             <c:set var="pay" value="${receipt.payment}"/>
                             <p class="card-text"><fmt:formatNumber value="${pay}" type="currency"/></p>
-                            <p class="card-text">paid: ${receipt.paid}</p>
+                            <p class="card-text">paid: ${receipt.paid.booleanValue()}</p>
                             <p class="card-text">${receipt.date} | ${receipt.time}</p>
                             <p class="card-text">${receipt.comment}</p>
                             <a href="/edit/${receipt.id}" style="margin-right: 175px">edit</a>

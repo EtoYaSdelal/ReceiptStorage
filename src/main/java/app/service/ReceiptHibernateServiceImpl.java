@@ -1,3 +1,4 @@
+/*
 package app.service;
 
 import app.dao.DaoReceiptImpl;
@@ -11,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ReceiptServiceImpl implements ReceiptService {
+public class ReceiptHibernateServiceImpl implements ReceiptService {
 
     private final DaoReceiptImpl daoReceipt;
 
     @Autowired
-    public ReceiptServiceImpl(DaoReceiptImpl daoReceipt) {
+    public ReceiptHibernateServiceImpl(DaoReceiptImpl daoReceipt) {
         this.daoReceipt = daoReceipt;
     }
 
@@ -54,14 +55,15 @@ public class ReceiptServiceImpl implements ReceiptService {
     @Override
     @Transactional
     public List<Receipt> showDebtors() {
-        return getAllReceipts().stream().filter(x -> !x.isPaid()).collect(Collectors.toList());
+        return getAllReceipts().stream().filter(x -> !x.getPaid()).collect(Collectors.toList());
     }
 
     @Override
     @Transactional
     public List<Receipt> sortByName() {
-        return getAllReceipts().stream().sorted(Comparator.comparing(Receipt::getCompanyName)).collect(Collectors.toList());
+        return getAllReceipts().stream().sorted(Comparator.comparing(r-> r.getCompanyName().toUpperCase())).collect(Collectors.toList());
     }
 
 }
 
+*/

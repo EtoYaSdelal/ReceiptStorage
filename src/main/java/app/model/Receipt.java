@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -19,14 +21,17 @@ public class Receipt {
     @Column(name = "rec_id")
     private String id = UUID.randomUUID().toString().substring(0, 8);
 
+    @NotBlank(message = "Company name is required")
     @Column(name = "company_name")
     private String companyName;
 
+    @NotNull(message = "payment is required")
     @Column(name = "payment")
-    private double payment;
+    private Double payment;
 
+    @NotNull(message = "paid is required")
     @Column(name = "paid")
-    private boolean paid;
+    private Boolean paid;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "date")
@@ -55,11 +60,11 @@ public class Receipt {
         this.companyName = companyName;
     }
 
-    public double getPayment() {
+    public Double getPayment() {
         return payment;
     }
 
-    public void setPayment(double payment) {
+    public void setPayment(Double payment) {
         this.payment = payment;
     }
 
@@ -81,11 +86,11 @@ public class Receipt {
     }
 
 
-    public boolean isPaid() {
+    public Boolean getPaid() {
         return paid;
     }
 
-    public void setPaid(boolean paid) {
+    public void setPaid(Boolean paid) {
         this.paid = paid;
     }
 

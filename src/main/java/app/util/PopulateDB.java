@@ -19,7 +19,7 @@ public class PopulateDB {
             receipts.add(RandomReceiptGetter.getReceipt());
         }
 
-        List<Receipt> collect = receipts.stream().filter(x -> !x.isPaid()).collect(Collectors.toList());
+        List<Receipt> collect = receipts.stream().filter(x -> !x.getPaid()).collect(Collectors.toList());
         collect.forEach(System.out::println);
 
         try (Connection connection = DriverManager.getConnection(URL, USER, PASS)) {
@@ -36,7 +36,7 @@ public class PopulateDB {
             preparedStatement.setString(1, receipt.getId());
             preparedStatement.setString(2, receipt.getCompanyName());
             preparedStatement.setDouble(3, receipt.getPayment());
-            preparedStatement.setBoolean(4, receipt.isPaid());
+            preparedStatement.setBoolean(4, receipt.getPaid());
             preparedStatement.setDate(5, Date.valueOf(receipt.getDate()));
             preparedStatement.setTime(6, Time.valueOf(receipt.getTime()));
             preparedStatement.setString(7, receipt.getComment());

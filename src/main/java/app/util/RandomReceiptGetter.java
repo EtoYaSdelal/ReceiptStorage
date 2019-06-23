@@ -18,7 +18,7 @@ public class RandomReceiptGetter {
         receipt.setDate(getDate());
         receipt.setTime(getTime());
         receipt.setPaid(new Random().nextBoolean());
-        if (receipt.isPaid()) {
+        if (receipt.getPaid()) {
             receipt.setComment("everything were nice");
         } else {
             receipt.setComment("they didn't pay yet");

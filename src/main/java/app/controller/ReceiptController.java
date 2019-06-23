@@ -1,26 +1,32 @@
 package app.controller;
 
 import app.model.Receipt;
+import app.repository.ReceiptRepository;
 import app.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Controller
-public class StoreController {
+public class ReceiptController {
 
-    private final ReceiptService receiptService;
 
     @Autowired
-    public StoreController(ReceiptService receiptService) {
-        this.receiptService = receiptService;
-    }
+    private ReceiptService receiptService;
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView allModels() {
@@ -41,8 +47,12 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editReceipt(@ModelAttribute("receipt") Receipt receipt) {
+    public ModelAndView editReceipt(@ModelAttribute("receipt") @Valid Receipt receipt, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("/edit");
+            return modelAndView;
+        }
         modelAndView.setViewName("redirect:/");
         receiptService.editReceipt(receipt);
         return modelAndView;
@@ -57,18 +67,26 @@ public class StoreController {
     }
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ModelAndView addReceipt(@ModelAttribute("receipt") Receipt receipt) throws IllegalArgumentException {
+    public ModelAndView addReceipt(@ModelAttribute("receipt") @Valid Receipt receipt, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
+        if (bindingResult.hasErrors()) {
+            modelAndView.setViewName("/add");
+            return modelAndView;
+        }
         modelAndView.setViewName("redirect:/");
+        checkField(receipt);
+        receiptService.addReceipt(receipt);
+        return modelAndView;
+    }
+
+    private void checkField(@ModelAttribute("receipt") Receipt receipt) {
+
         if (receipt.getTime() == null) {
             receipt.setTime(LocalTime.now());
         }
         if (receipt.getDate() == null) {
             receipt.setDate(LocalDate.now());
         }
-        System.out.println(receipt.getPayment() + " bool " + receipt.isPaid());
-        receiptService.addReceipt(receipt);
-        return modelAndView;
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
@@ -104,8 +122,23 @@ public class StoreController {
                 modelAndView.addObject("receipts", receiptService.sortByName());
                 break;
         }
-
         return modelAndView;
     }
 
+    @InitBinder("receipt")
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Receipt.class, "serverId", new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                String paymentPattern = "^\\d*\\.\\d+$";
+                Pattern pattern = Pattern.compile(paymentPattern);
+                Matcher matcher = pattern.matcher(text);
+                if (!matcher.matches()) {
+                    setValue("");
+                } else {
+                    setValue(Double.parseDouble(text));
+                }
+            }
+        });
+    }
 }
