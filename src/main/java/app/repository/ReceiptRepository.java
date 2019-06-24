@@ -15,8 +15,6 @@ public interface ReceiptRepository extends JpaRepository<Receipt, String> {
 
     List<Receipt> findByPaid(Boolean bool);
 
-    //List<Receipt> findByOrOrderByCompanyNameAsc();
-
     @Modifying
     @Query(value = "update Receipt rec set " +
             "rec.companyName= ?1," +
@@ -24,7 +22,7 @@ public interface ReceiptRepository extends JpaRepository<Receipt, String> {
             " rec.paid= ?3," +
             " rec.date = ?4," +
             " rec.time = ?5," +
-            " rec.comment= ?6" +
+            " rec.comment = ?6 " +
             "where rec.id= ?7")
     void customEditReceipt(String companyName,
                            Double payment,

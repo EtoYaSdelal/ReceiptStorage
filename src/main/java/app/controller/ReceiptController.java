@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.model.Receipt;
-import app.repository.ReceiptRepository;
 import app.service.ReceiptService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -25,6 +24,8 @@ public class ReceiptController {
 
 
     @Autowired
+//    @Qualifier(value = "receiptHibernateServiceImpl")
+    @Qualifier(value = "receiptRepositoryServiceImpl")
     private ReceiptService receiptService;
 
 

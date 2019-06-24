@@ -15,4 +15,5 @@ public interface DaoReceipt {
 
     List<Receipt> getAllReceipts();
 
+
 }

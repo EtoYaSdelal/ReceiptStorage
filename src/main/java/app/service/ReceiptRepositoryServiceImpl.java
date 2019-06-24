@@ -10,21 +10,26 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional(value = "transactionManager")
 public class ReceiptRepositoryServiceImpl implements ReceiptService {
 
     @Autowired
     private ReceiptRepository receiptRepository;
 
     @Override
-    @Transactional
+
     public void addReceipt(Receipt receipt) {
         receiptRepository.save(receipt);
     }
 
     @Override
-    @Transactional
     public void editReceipt(Receipt receipt) {
+//        Receipt existRec = receiptRepository.getOne(receipt.getId());
+//        receiptRepository.delete(receipt);
+//        receiptRepository.save(existRec);
+
+        System.out.println("============||============");
+        System.out.println(receipt);
         receiptRepository.customEditReceipt(
                 receipt.getCompanyName()
                 , receipt.getPayment()
@@ -33,16 +38,17 @@ public class ReceiptRepositoryServiceImpl implements ReceiptService {
                 , receipt.getTime()
                 , receipt.getComment()
                 , receipt.getId());
+
+
     }
 
 
     @Override
     public Receipt getReceipt(String id) {
-        return receiptRepository.getOne(id);
+        return receiptRepository.findById(id).orElse(null);
     }
 
     @Override
-    @Transactional
     public void deleteReceipt(Receipt receipt) {
         receiptRepository.delete(receipt);
     }

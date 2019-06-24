@@ -4,19 +4,15 @@ import app.model.Receipt;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Repository
+@Component
 public class DaoReceiptImpl implements DaoReceipt {
 
-    private SessionFactory sessionFactory;
-
     @Autowired
-    public DaoReceiptImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
+    private SessionFactory sessionFactory;
 
     @Override
     public void addReceipt(Receipt receipt) {
