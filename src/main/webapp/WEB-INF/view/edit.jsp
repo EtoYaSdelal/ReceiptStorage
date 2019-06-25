@@ -25,6 +25,7 @@
     <div class="card border-primary mb-3" style="max-width: 35rem;">
         <div class="card-header">Edit ${receipt.id}</div>
         <div class="form-group">
+
             <form:input type="hidden" path="id" value="${receipt.id}"/>
             <form:input type="hidden" path="date" value="${receipt.date}"/>
             <form:input type="hidden" path="time" value="${receipt.time}"/>
@@ -56,15 +57,10 @@
             </small>
             <form:label for="comment" path="comment">Comment:</form:label>
             <form:textarea class="form-control" id="comment" path="comment"></form:textarea>
-            <p></p>
             <input type="submit" value="Edit">
             <input type="reset" value="reset">
         </div>
     </div>
 </form:form>
-
-
-
-
 </body>
 </html>

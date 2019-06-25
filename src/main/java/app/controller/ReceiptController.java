@@ -40,15 +40,17 @@ public class ReceiptController {
 
     @RequestMapping(value = "/edit/{id}", method = RequestMethod.GET)
     public ModelAndView editPage(@PathVariable("id") String id) {
-        Receipt receipt = receiptService.getReceipt(id);
         ModelAndView modelAndView = new ModelAndView();
+        Receipt receipt = receiptService.getReceipt(id);
         modelAndView.setViewName("edit");
         modelAndView.addObject("receipt", receipt);
         return modelAndView;
     }
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
-    public ModelAndView editReceipt(@ModelAttribute("receipt") @Valid Receipt receipt, BindingResult bindingResult) {
+    public ModelAndView editReceipt(@ModelAttribute("receipt") @Valid Receipt receipt
+            , BindingResult bindingResult
+            , HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         if (bindingResult.hasErrors()) {
             modelAndView.setViewName("/edit");
@@ -90,11 +92,12 @@ public class ReceiptController {
         }
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteReceipt(@PathVariable("id") String id) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("redirect:/");
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public ModelAndView deleteReceipt(@PathVariable("id") String id, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        String referer = request.getHeader("Referer");
+        modelAndView.setViewName("redirect:" + referer);
         receiptService.deleteReceipt(receiptService.getReceipt(id));
         return modelAndView;
     }
@@ -112,6 +115,10 @@ public class ReceiptController {
     @RequestMapping(value = "/", params = "show", method = RequestMethod.GET)
     public @ResponseBody
     ModelAndView showDebtors(@RequestParam(value = "show") String action) {
+        return showBySort(action);
+    }
+
+    private ModelAndView showBySort(String action) {
         ModelAndView modelAndView = new ModelAndView();
         switch (action) {
             case "debtors":
