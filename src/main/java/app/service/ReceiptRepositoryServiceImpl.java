@@ -17,7 +17,6 @@ public class ReceiptRepositoryServiceImpl implements ReceiptService {
     private ReceiptRepository receiptRepository;
 
     @Override
-
     public void addReceipt(Receipt receipt) {
         receiptRepository.save(receipt);
     }
